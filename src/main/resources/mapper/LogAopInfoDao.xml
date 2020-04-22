@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.logaop.dao.LogAopInfoDao">
+
+    <resultMap type="com.example.logaop.entity.LogAopInfo" id="LogaopinfoMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="sessionid" column="sessionID" jdbcType="VARCHAR"/>
+        <result property="requesturi" column="requestURI" jdbcType="VARCHAR"/>
+        <result property="method" column="method" jdbcType="VARCHAR"/>
+        <result property="parametermapstr" column="parameterMapStr" jdbcType="VARCHAR"/>
+        <result property="ipaddress" column="ipAddress" jdbcType="VARCHAR"/>
+        <result property="begindatetime" column="beginDateTime" jdbcType="TIMESTAMP"/>
+        <result property="enddatetime" column="endDateTime" jdbcType="TIMESTAMP"/>
+        <result property="spendtimes" column="spendTimes" jdbcType="INTEGER"/>
+        <result property="statuscode" column="statusCode" jdbcType="INTEGER"/>
+        <result property="responseinfo" column="responseInfo" jdbcType="VARCHAR"/>
+        <result property="error" column="error" jdbcType="VARCHAR"/>
+        <result property="exception" column="exception" jdbcType="VARCHAR"/>
+        <result property="errormsg" column="errorMsg" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="LogaopinfoMap">
+        select
+          id, sessionID, requestURI, method, parameterMapStr, ipAddress, beginDateTime, endDateTime, spendTimes, statusCode, responseInfo, error, exception, errorMsg
+        from mybatis.logaopinfo
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="LogaopinfoMap">
+        select
+          id, sessionID, requestURI, method, parameterMapStr, ipAddress, beginDateTime, endDateTime, spendTimes, statusCode, responseInfo, error, exception, errorMsg
+        from mybatis.logaopinfo
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="LogaopinfoMap">
+        select
+          id, sessionID, requestURI, method, parameterMapStr, ipAddress, beginDateTime, endDateTime, spendTimes, statusCode, responseInfo, error, exception, errorMsg
+        from mybatis.logaopinfo
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="sessionid != null and sessionid != ''">
+                and sessionID = #{sessionid}
+            </if>
+            <if test="requesturi != null and requesturi != ''">
+                and requestURI = #{requesturi}
+            </if>
+            <if test="method != null and method != ''">
+                and method = #{method}
+            </if>
+            <if test="parametermapstr != null and parametermapstr != ''">
+                and parameterMapStr = #{parametermapstr}
+            </if>
+            <if test="ipaddress != null and ipaddress != ''">
+                and ipAddress = #{ipaddress}
+            </if>
+            <if test="begindatetime != null">
+                and beginDateTime = #{begindatetime}
+            </if>
+            <if test="enddatetime != null">
+                and endDateTime = #{enddatetime}
+            </if>
+            <if test="spendtimes != null">
+                and spendTimes = #{spendtimes}
+            </if>
+            <if test="statuscode != null">
+                and statusCode = #{statuscode}
+            </if>
+            <if test="responseinfo != null and responseinfo != ''">
+                and responseInfo = #{responseinfo}
+            </if>
+            <if test="error != null and error != ''">
+                and error = #{error}
+            </if>
+            <if test="exception != null and exception != ''">
+                and exception = #{exception}
+            </if>
+            <if test="errormsg != null and errormsg != ''">
+                and errorMsg = #{errormsg}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true" parameterType="com.example.logaop.entity.LogAopInfo">
+        insert into mybatis.logaopinfo(sessionID, requestURI, method, parameterMapStr, ipAddress, beginDateTime, endDateTime, spendTimes, statusCode, responseInfo, error, exception, errorMsg)
+        values (#{sessionID}, #{requestUri}, #{method}, #{parameterMapStr}, #{ipAddress}, #{beginDateTime}, #{endDateTime}, #{spendTimes}, #{statusCode}, #{responseInfo}, #{error,}, #{exception}, #{errorMsg})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update mybatis.logaopinfo
+        <set>
+            <if test="sessionid != null and sessionid != ''">
+                sessionID = #{sessionid},
+            </if>
+            <if test="requesturi != null and requesturi != ''">
+                requestURI = #{requesturi},
+            </if>
+            <if test="method != null and method != ''">
+                method = #{method},
+            </if>
+            <if test="parametermapstr != null and parametermapstr != ''">
+                parameterMapStr = #{parametermapstr},
+            </if>
+            <if test="ipaddress != null and ipaddress != ''">
+                ipAddress = #{ipaddress},
+            </if>
+            <if test="begindatetime != null">
+                beginDateTime = #{begindatetime},
+            </if>
+            <if test="enddatetime != null">
+                endDateTime = #{enddatetime},
+            </if>
+            <if test="spendtimes != null">
+                spendTimes = #{spendtimes},
+            </if>
+            <if test="statuscode != null">
+                statusCode = #{statuscode},
+            </if>
+            <if test="responseinfo != null and responseinfo != ''">
+                responseInfo = #{responseinfo},
+            </if>
+            <if test="error != null and error != ''">
+                error = #{error},
+            </if>
+            <if test="exception != null and exception != ''">
+                exception = #{exception},
+            </if>
+            <if test="errormsg != null and errormsg != ''">
+                errorMsg = #{errormsg},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from mybatis.logaopinfo where id = #{id}
+    </delete>
+
+</mapper>
