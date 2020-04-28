@@ -1,5 +1,6 @@
 -- auto-generated definition
 --数据库mybatis
+--set global time_zone = '+8:00';
 create table logaopinfo
 (
     id              int auto_increment

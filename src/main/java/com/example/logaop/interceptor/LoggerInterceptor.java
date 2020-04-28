@@ -24,14 +24,17 @@ public class LoggerInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        HandlerMethod handlerMethod = (HandlerMethod)handler;
+        if (!(handler instanceof HandlerMethod)) {
+            return true;
+        }
+        HandlerMethod handlerMethod = (HandlerMethod) handler;
         LogAop loginCheck = handlerMethod.getMethod().getAnnotation(LogAop.class);
-        if (loginCheck !=null && loginCheck.logFlag()){
-            Map<String, String[]> parameterMap =  request.getParameterMap();
-            Optional<Boolean> optional =  parameterMap.entrySet().stream()
-                    .filter(e-> e.getKey().equals(ILogAspectConst.REQUEST_TOKEN_FIELD)).findFirst()
-                    .map(e->e.getValue()[0].startsWith(ILogAspectConst.TOKEN_INFO));
-            if(optional.orElse(false)){
+        if (loginCheck != null && loginCheck.logFlag()) {
+            Map<String, String[]> parameterMap = request.getParameterMap();
+            Optional<Boolean> optional = parameterMap.entrySet().stream()
+                    .filter(e -> e.getKey().equals(ILogAspectConst.REQUEST_TOKEN_FIELD)).findFirst()
+                    .map(e -> e.getValue()[0].startsWith(ILogAspectConst.TOKEN_INFO));
+            if (optional.orElse(false)) {
                 return true;
             }
             response.setContentType(ILogAspectConst.CONTENT_TYPE);
@@ -48,7 +51,6 @@ public class LoggerInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-
 
 
     }
